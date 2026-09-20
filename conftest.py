@@ -15,7 +15,7 @@ def driver():
 
     # Create driver
     driver = DriverFactory.get_driver()
-    driver.maximize_window()
+    driver.set_window_size(1920, 1080)
 
     yield driver
 

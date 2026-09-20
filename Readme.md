@@ -1,159 +1,83 @@
-# 🛒 E-Commerce Test Automation Framework
+# E-Commerce Test Automation (Selenium + Pytest)
 
-[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
-[![Selenium](https://img.shields.io/badge/selenium-4.15.0-green)](https://www.selenium.dev/)
-[![Pytest](https://img.shields.io/badge/pytest-7.4.3-orange)](https://docs.pytest.org/)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+![Tests](https://github.com/<your-username>/Ecommerce-Test-Automation/actions/workflows/tests.yml/badge.svg)
 
-A professional test automation framework for e-commerce web applications using Python, Selenium WebDriver, and PyTest with Page Object Model.
+UI test automation framework for the [Swag Labs](https://www.saucedemo.com/) demo store, built with **Python, Selenium WebDriver and Pytest** using the **Page Object Model**.
 
-## 🎯 Features
+## Features
 
-- ✅ **Page Object Model** - Clean, maintainable, and reusable code structure
-- ✅ **Data-Driven Testing** - Test multiple scenarios with JSON data files
-- ✅ **Automatic Screenshots** - Captures screenshots on test failures
-- ✅ **HTML Reports** - Professional, self-contained test reports
-- ✅ **Detailed Logging** - Comprehensive execution logs
-- ✅ **Parallel Execution** - Faster test execution with pytest-xdist
-- ✅ **Cross-Browser Support** - Easily extendable to multiple browsers
+- **Page Object Model**: locators and page actions live in page classes; tests contain only test logic and assertions
+- **Pytest fixtures and markers**: `smoke`, `regression` and `critical` markers for selective runs
+- **Self-contained HTML report** with a **screenshot embedded automatically on every failure**
+- **Centralised logging** of every navigation, click and input
+- **Externalised test data** (JSON) for users and checkout details
+- **Headless mode** controlled by an environment variable, so the same code runs locally and in CI
+- **CI** with GitHub Actions: the suite runs on every push and the report is uploaded as an artifact
 
-## 🏗️ Project Structure
+## Tech stack
+
+Python 3.12, Selenium 4, Pytest, pytest-html, pytest-xdist, Faker, GitHub Actions
+
+## Test coverage (12 tests)
+
+| Area | Scenarios |
+|---|---|
+| **Login** | valid login, invalid login, locked-out user, empty credentials, username only |
+| **Cart** | add one item, add multiple items, remove item, cart persistence across navigation |
+| **Checkout** | complete checkout, checkout with an empty cart, checkout with missing information |
+
+## Project structure
+
+```
 Ecommerce-Test-Automation/
-├── tests/ # Test cases
-│ ├── test_login.py
-│ ├── test_cart.py
-│ └── test_checkout.py
-├── pages/ # Page Object classes
-│ ├── base_page.py
-│ ├── login_page.py
-│ ├── inventory_page.py
-│ ├── cart_page.py
-│ └── checkout_page.py
-├── utils/ # Utility modules
-│ ├── driver_factory.py
-│ ├── logger.py
-│ ├── screenshot.py
-│ └── helpers.py
-├── testdata/ # Test data files
-│ └── users.json
-├── reports/ # Test reports (generated)
-├── screenshots/ # Screenshots on failure (generated)
-├── conftest.py # PyTest configuration
-├── pytest.ini # PyTest settings
-├── run_tests.py # Test execution script
+├── .github/workflows/tests.yml   # CI pipeline
+├── pages/                        # Page Objects (base, login, inventory, cart, checkout)
+├── tests/                        # test_login.py, test_cart.py, test_checkout.py
+├── utils/                        # driver factory, logger, screenshots, helpers
+├── conftest.py                   # fixtures, failure screenshots, report hooks
+├── pytest.ini                    # default options and report settings
 └── requirements.txt
+```
 
-text
+## Getting started
 
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Python 3.8 or higher
-- Google Chrome browser
-- Git (optional, for cloning)
-
-### Installation
-
-1. **Clone the repository**
 ```bash
-git clone https://github.com/YOUR-USERNAME/Ecommerce-Test-Automation.git
+git clone https://github.com/<your-username>/Ecommerce-Test-Automation.git
 cd Ecommerce-Test-Automation
-Create and activate virtual environment
 
-bash
-# Windows
 python -m venv venv
-venv\Scripts\activate
+# Windows:  venv\Scripts\activate
+# macOS/Linux:  source venv/bin/activate
 
-# Mac/Linux
-python3 -m venv venv
-source venv/bin/activate
-Install dependencies
-
-bash
 pip install -r requirements.txt
-Running Tests
-bash
-# Run all tests
-python run_tests.py
+```
 
-# Run specific test file
-pytest tests/test_login.py -v
+Chrome must be installed. Selenium 4 downloads the matching driver automatically.
 
-# Run smoke tests only
-pytest -m smoke -v
+## Running the tests
 
-# Run with HTML report
-pytest --html=reports/report.html --self-contained-html
-📊 Test Results
-After running tests, you'll find:
+```bash
+pytest                      # run everything
+pytest -m smoke             # smoke tests only
+pytest -m critical          # critical-path tests only
+pytest tests/test_login.py  # a single file
+pytest -n 3                 # run in parallel (pytest-xdist)
+```
 
-HTML Report: reports/test_report.html
+Run headless (no visible browser):
 
-Logs: reports/test_execution.log
+```bash
+# Windows PowerShell
+$env:HEADLESS="1"; pytest
 
-Screenshots: screenshots/ (on failures only)
+# macOS/Linux
+HEADLESS=1 pytest
+```
 
-🧪 Test Scenarios
-Login Tests
-✅ Valid login with correct credentials
+## Reports
 
-✅ Invalid login with wrong credentials
+After each run, open `reports/report.html`. Failed tests include a screenshot of the browser at the moment of failure (also saved in `screenshots/`).
 
-✅ Locked out user handling
+## Continuous integration
 
-✅ Empty credentials validation
-
-✅ Missing username/password validation
-
-Cart Tests
-✅ Add single item to cart
-
-✅ Add multiple items to cart
-
-✅ Remove items from cart
-
-✅ Cart persistence across navigation
-
-Checkout Tests
-✅ Complete checkout process
-
-✅ Empty cart checkout
-
-✅ Missing information validation
-
-🛠️ Technologies Used
-Technology	Version	Purpose
-Python	3.8+	Programming language
-Selenium	4.15.0	Web automation
-PyTest	7.4.3	Test framework
-Pytest-HTML	4.1.1	HTML reporting
-Pytest-XDist	3.5.0	Parallel execution
-Faker	20.1.0	Test data generation
-OpenPyXL	3.1.2	Excel file support
-📝 Resume Description
-E-Commerce Test Automation Framework | Python, Selenium, PyTest
-
-Designed a modular UI automation framework using the Page Object Model for an e-commerce web application
-
-Automated login, cart, and checkout workflows with positive and negative test cases
-
-Implemented data-driven testing using JSON, HTML reporting, logging, and automatic screenshot capture on failures
-
-Structured the project for maintainability with reusable page classes and utility modules
-
-Achieved 100% pass rate on critical test scenarios
-
-🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-🙏 Acknowledgments
-SauceDemo - Test website
-
-Selenium - Web automation framework
-
-PyTest - Testing framework
+`.github/workflows/tests.yml` installs dependencies, runs the suite on every push and pull request, and uploads the HTML report and screenshots as a downloadable artifact.

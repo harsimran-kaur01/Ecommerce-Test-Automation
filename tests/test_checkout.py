@@ -105,10 +105,25 @@ class TestCheckout:
         login_page.login(user["username"], user["password"])
         time.sleep(1)
 
-        # Go to cart (should be empty)
+        # Go to cart
         inventory_page = InventoryPage(driver)
         inventory_page.go_to_cart()
         time.sleep(1)
+
+        # The class-level setup already put an item in the cart,
+        # so empty the cart first to make this a real "empty cart" test.
+        driver.implicitly_wait(0)  # don't wait 10s when no Remove buttons are left
+        try:
+            while True:
+                remove_buttons = driver.find_elements(
+                    By.CSS_SELECTOR, "button[data-test^='remove']"
+                )
+                if not remove_buttons:
+                    break
+                remove_buttons[0].click()
+                time.sleep(0.5)
+        finally:
+            driver.implicitly_wait(10)
 
         # Try to checkout
         cart_page = CartPage(driver)
