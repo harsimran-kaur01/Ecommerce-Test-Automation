@@ -1,6 +1,6 @@
 # E-Commerce Test Automation (Selenium + Pytest)
 
-![Tests](https://github.com/<your-username>/Ecommerce-Test-Automation/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/harsimran-kaur01/Ecommerce-Test-Automation/actions/workflows/tests.yml/badge.svg)
 
 UI test automation framework for the [Swag Labs](https://www.saucedemo.com/) demo store, built with **Python, Selenium WebDriver and Pytest** using the **Page Object Model**.
 
